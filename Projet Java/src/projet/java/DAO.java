@@ -6,6 +6,7 @@
 package projet.java;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 
 /**
  *
@@ -13,10 +14,23 @@ import java.sql.Connection;
  */
 public abstract class DAO<T> {
 
-    protected Connection connect = null;
+    protected Connection conn = null;
 
     public DAO(Connection conn) {
-        this.connect = conn;
+        conn = null;
+        String url = "jdbc:mysql://localhost/";
+        String dbName = "gestion_ecole";
+        String driver = "com.mysql.jdbc.Driver";
+        String userName = "root";
+        String password = "";
+        try {
+            Class.forName(driver).newInstance();
+            conn = DriverManager.getConnection(url + dbName, userName, password);
+        this.conn = conn;
+        }catch(Exception e){
+        System.out.println("probleme de connexion a la BDD");
+        }
+        
     }
 
     /**
@@ -25,7 +39,7 @@ public abstract class DAO<T> {
      * @param obj
      * @return boolean
      */
-    public abstract boolean create(T obj);
+    public abstract void creer(T obj);
 
     /**
      * Méthode pour effacer
@@ -33,7 +47,7 @@ public abstract class DAO<T> {
      * @param obj
      * @return boolean
      */
-    public abstract boolean delete(T obj);
+    public abstract void supprimer(T obj);
 
     /**
      * Méthode de mise à jour
@@ -41,7 +55,7 @@ public abstract class DAO<T> {
      * @param obj
      * @return boolean
      */
-    public abstract boolean update(T obj);
+    public abstract void modifier(T obj);
 
     /**
      * Méthode de recherche des informations
@@ -49,5 +63,5 @@ public abstract class DAO<T> {
      * @param id
      * @return T
      */
-    public abstract T find(int id);
+    public abstract void afficher(int id);
 }
