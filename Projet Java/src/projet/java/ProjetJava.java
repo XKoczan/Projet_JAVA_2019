@@ -40,29 +40,29 @@ public class ProjetJava {
         //On peut demander à l'utilisateur de saisir ces données là sur une fenêtre de connexion
         //https://www.experts-exchange.com/questions/27403504/JAVA-JDBC.html
         //Information pour connexion à la base de données
-        System.out.println("MySQL Connect Example.");
-        Connection conn = null;
-        String url = "jdbc:mysql://localhost/";
-        String dbName = "gestion_ecole";
-        String driver = "com.mysql.jdbc.Driver";
-        String userName = "root";
-        String password = "";
+//        System.out.println("MySQL Connect Example.");
+//        Connection conn = null;
+//        String url = "jdbc:mysql://localhost/";
+//        String dbName = "gestion_ecole";
+//        String driver = "com.mysql.jdbc.Driver";
+//        String userName = "root";
+//        String password = "";
         // Fin de l'initialisation des parametres de connexion
         
         try {
-            Class.forName(driver);
+//            Class.forName(driver);
             //Connexion
-            conn = DriverManager.getConnection(url + dbName, userName, password);
+//            conn = DriverManager.getConnection(url + dbName, userName, password);
             
             //Test avec DAO: On fait tourjours appel à la connection pour nos méthodes, elle est initialisée dans le main plus haut
             //Création d'un élève
             
-            DAO_Eleve Testeleve=new DAO_Eleve(conn);
-            Eleve toto=new Eleve(10);
+            DAO_Eleve Testeleve=new DAO_Eleve();
+            Eleve toto=new Eleve();
             //Ecriture dans la BDD -> voir le code dans DAO_Eleve
             Testeleve.creer(toto);//Test creation
             Testeleve.modifier(toto);
-//            Testeleve.supprimer(toto);
+            Testeleve.supprimer(toto);
             
             
    /* Test de lecture et d'ajout 
@@ -86,9 +86,9 @@ public class ProjetJava {
 
             
      */       
-            System.out.println("Connected to the database");
-            conn.close();
-            System.out.println("Disconnected from database");
+//            System.out.println("Connected to the database");
+//            conn.close();
+//            System.out.println("Disconnected from database");
         } catch (Exception e) {
            System.out.println("pb dans le main");
         }

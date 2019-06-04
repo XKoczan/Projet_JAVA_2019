@@ -20,8 +20,9 @@ import java.util.logging.Logger;
  */
 public class DAO_Eleve extends DAO<Eleve> {
 
-    public DAO_Eleve() {
-    super();
+    public DAO_Eleve(Connection conn) {
+        super(conn);
+
     }
 
     public void creer(Eleve obj) {
@@ -81,15 +82,15 @@ public class DAO_Eleve extends DAO<Eleve> {
             String prenom;
             String type;
             Scanner sc = new Scanner(System.in);
-            Scanner sc1 = new Scanner(System.in);
+            
             System.out.println("Saisir l'id de la modification a faire");
             id= sc.nextInt();
             System.out.println("modif nom");
-            nom = sc1.nextLine();
+            nom = sc.nextLine();
             System.out.println("modif prenom");
-            prenom = sc1.nextLine();
+            prenom = sc.nextLine();
             System.out.println("modif type etu/prof");
-            type = sc1.nextLine();
+            type = sc.nextLine();
             
             // ID ave cla classe ELeve
 //            id = obj.getId();

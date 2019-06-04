@@ -16,7 +16,7 @@ public abstract class DAO<T> {
 
     protected Connection conn = null;
 
-    public DAO(Connection conn) {
+    public DAO() {
         conn = null;
         String url = "jdbc:mysql://localhost/";
         String dbName = "gestion_ecole";
@@ -24,7 +24,7 @@ public abstract class DAO<T> {
         String userName = "root";
         String password = "";
         try {
-            Class.forName(driver).newInstance();
+            Class.forName(driver);
             conn = DriverManager.getConnection(url + dbName, userName, password);
         this.conn = conn;
         }catch(Exception e){
