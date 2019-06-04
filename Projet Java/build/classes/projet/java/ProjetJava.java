@@ -56,11 +56,13 @@ public class ProjetJava {
             
             //Test avec DAO: On fait tourjours appel à la connection pour nos méthodes, elle est initialisée dans le main plus haut
             //Création d'un élève
+            
             DAO_Eleve Testeleve=new DAO_Eleve(conn);
+            Eleve toto=new Eleve();
             //Ecriture dans la BDD -> voir le code dans DAO_Eleve
-            Testeleve.creer(conn);//Test creation
-            Testeleve.modifier(conn);
-            Testeleve.supprimer(conn);
+            Testeleve.creer(toto);//Test creation
+//            Testeleve.modifier(toto);
+//            Testeleve.supprimer(toto);
             
             
    /* Test de lecture et d'ajout 

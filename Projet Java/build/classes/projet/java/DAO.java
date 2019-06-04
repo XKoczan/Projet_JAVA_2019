@@ -39,7 +39,7 @@ public abstract class DAO<T> {
      * @param obj
      * @return boolean
      */
-    public abstract void creer(Connection conn);
+    public abstract void creer(T obj);
 
     /**
      * Méthode pour effacer
@@ -47,7 +47,7 @@ public abstract class DAO<T> {
      * @param obj
      * @return boolean
      */
-    public abstract void supprimer(Connection conn);
+    public abstract void supprimer(T obj);
 
     /**
      * Méthode de mise à jour
@@ -55,7 +55,7 @@ public abstract class DAO<T> {
      * @param obj
      * @return boolean
      */
-    public abstract void modifier(Connection conn);
+    public abstract void modifier(T obj);
 
     /**
      * Méthode de recherche des informations
