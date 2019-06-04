@@ -9,24 +9,16 @@ package projet.java;
  *
  * @author Guillaume
  */
-public class Eleve {
-
-    int id;
-
+public class Eleve extends Personne{
     public Eleve() {
 
     }
-
-    public Eleve(int id) {
-        this.id = id;
+    public Eleve(int id, String nom, String prenom) {
+        super(id,nom,prenom,"etu");
     }
-
-    public int getId() {
-        return id;
+    @Override
+    public String toString()
+    {
+        return "ID:"+this.getId()+"|"+"NOM:"+this.getNom()+"|Prenom:"+this.getPrenom()+"|Type:"+this.getType();
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 }

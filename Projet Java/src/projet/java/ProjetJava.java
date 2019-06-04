@@ -5,6 +5,7 @@
  */
 package projet.java;
 
+import Vue.InterfaceGraphique;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,9 +61,14 @@ public class ProjetJava {
             DAO_Eleve Testeleve=new DAO_Eleve();
             Eleve toto=new Eleve();
             //Ecriture dans la BDD -> voir le code dans DAO_Eleve
-            Testeleve.creer(toto);//Test creation
+           // Testeleve.creer(toto);//Test creation
             //Testeleve.modifier(toto);
             //Testeleve.supprimer(toto);
+            DAO_Professeur te=new DAO_Professeur();
+            Professeur prof=new Professeur();
+//            te.creer(prof, 0);
+//            te.modifier(prof);
+//            te.supprimer(prof);
             
         InterfaceGraphique IG = new InterfaceGraphique();
             

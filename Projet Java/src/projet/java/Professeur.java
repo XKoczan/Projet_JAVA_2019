@@ -9,12 +9,12 @@ package projet.java;
  *
  * @author Guillaume
  */
-public class Eleve extends Personne{
-    public Eleve() {
-
-    }
-    public Eleve(int id, String nom, String prenom) {
-        super(id,nom,prenom,"etu");
+public class Professeur extends Personne {
+    
+    public Professeur(){}
+    
+    public Professeur(int id, String nom, String prenom) {
+        super(id,nom,prenom,"prof");
     }
     @Override
     public String toString()

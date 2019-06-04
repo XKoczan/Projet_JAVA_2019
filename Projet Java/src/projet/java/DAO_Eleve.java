@@ -5,15 +5,13 @@
  */
 package projet.java;
 
-import java.awt.GridLayout;
-import java.sql.Connection;
+import Exceptions.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class DAO_Eleve extends DAO<Eleve> {
 
-    ArrayList<Eleve> collection_eleve = new ArrayList<>();
+    private ArrayList<Eleve> collection_eleve = new ArrayList<>();
 
     public DAO_Eleve() {
         super();
@@ -31,26 +29,49 @@ public class DAO_Eleve extends DAO<Eleve> {
     }
 
     @Override
-    public void creer(Eleve obj) {
+    public void creer(Eleve obj, int classe) {
         try {
-            String nom;
-            String prenom;
-            String type;
-            Scanner sc = new Scanner(System.in);
-            System.out.println("nom");
-            nom = sc.nextLine();
-            System.out.println("prenom");
-            prenom = sc.nextLine();
-            int id = obj.getId();
 
-            PreparedStatement stmt = conn.prepareStatement("insert into tab_personne(personne_nom,personne_prenom,personne_type) values(?,?,'etu')");
+            PreparedStatement stmt = conn.prepareStatement("insert into tab_personne(personne_nom,personne_prenom,personne_type) values(?,?,?)");
 
-            stmt.setObject(1, nom, Types.VARCHAR);
-            stmt.setObject(2, prenom, Types.VARCHAR);
+            stmt.setObject(1, obj.getNom(), Types.VARCHAR);
+            stmt.setObject(2, obj.getPrenom(), Types.VARCHAR);
+            stmt.setObject(3, obj.getType(), Types.VARCHAR);
             stmt.executeUpdate();
 
+            stmt = conn.prepareStatement("SELECT personne_id FROM tab_personne WHERE personne_nom = ? and personne_prenom = ?");
+//           System.out.println("1");//Test
+            stmt.setString(1, obj.getNom());
+            stmt.setString(2, obj.getPrenom());
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("personne_id");
+            System.out.println("IDD:" + id + "| Classe:" + classe);
+
+            stmt = conn.prepareStatement("insert into tab_inscription(inscription_classe_id,inscription_personne_id) values(?,?)");
+            stmt.setObject(1, classe, Types.INTEGER);
+            stmt.setObject(2, id, Types.INTEGER);
+            stmt.executeUpdate();
+
+            stmt = conn.prepareStatement("SELECT inscription_id FROM tab_inscription WHERE inscription_personne_id = ?");
+//           System.out.println("1");//Test
+            stmt.setObject(1, id);
+            rs = stmt.executeQuery();
+            rs.next();
+            int id2 = rs.getInt("inscription_id");
+            System.out.println("IDD2:" + id2 + "| Classe:" + classe);
+            
+            for (int i = 1; i <= 3; i++) {
+                stmt = conn.prepareStatement("insert into tab_bulletin(bulletin_trimestre_id,bulletin_inscription_id,bulletin_appreciation) values(?,?,'A renseigner')");
+                stmt.setObject(1, i, Types.INTEGER);
+                System.out.println("1");
+                stmt.setObject(2, id2, Types.INTEGER);
+                System.out.println("2");
+                stmt.executeUpdate();
+            }
+
         } catch (SQLException ex) {
-            System.out.println("Probleme de creation");
+            System.out.println("Probleme de creation eleve");
         }
 
     }
@@ -59,20 +80,28 @@ public class DAO_Eleve extends DAO<Eleve> {
     @Override
     public void supprimer(Eleve obj) {
         try {
-            int id;
-            Scanner sc = new Scanner(System.in);
-            //Avec Id de la classe 
-//            id = obj.getId();
-            System.out.println("Saisir l'id de la suppression a faire");
-            id = sc.nextInt();
 
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM tab_personne where personne_id = ?");
-            stmt.setObject(1, id, Types.INTEGER);
-//            stmt.executeUpdate("DELETE FROM tab_personne where personne_id = 11");
+            PreparedStatement stmt = conn.prepareStatement("SELECT inscription_id FROM tab_inscription WHERE inscription_personne_id = ?");
+//           System.out.println("1");//Test
+            stmt.setObject(1, obj.getId());
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id2 = rs.getInt("inscription_id");
+
+            stmt = conn.prepareStatement("DELETE FROM tab_bulletin where bulletin_inscription_id = ?");
+            stmt.setObject(1, id2, Types.INTEGER);
+            stmt.executeUpdate();
+
+            stmt = conn.prepareStatement("DELETE FROM tab_inscription where inscription_personne_id = ?");
+            stmt.setObject(1, obj.getId(), Types.INTEGER);
+            stmt.executeUpdate();
+
+            stmt = conn.prepareStatement("DELETE FROM tab_personne where personne_id = ?");
+            stmt.setObject(1, obj.getId(), Types.INTEGER);
             stmt.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println("Probleme de creation");
+            System.out.println("Probleme de suppression");
         }
     }
 
@@ -80,28 +109,14 @@ public class DAO_Eleve extends DAO<Eleve> {
     @Override
     public void modifier(Eleve obj) {
         try {
-            int id;
-            String nom;
-            String prenom;
-            String type;
-            Scanner sc = new Scanner(System.in);
-            Scanner sc1 = new Scanner(System.in);
-            System.out.println("Saisir l'id de la modification a faire");
-            id = sc.nextInt();
-            System.out.println("modif nom");
-            nom = sc1.nextLine();
-            System.out.println("modif prenom");
-            prenom = sc1.nextLine();
-            System.out.println("modif type etu/prof");
-            type = sc1.nextLine();
 
             // ID ave cla classe ELeve
 //            id = obj.getId();
             PreparedStatement stmt = conn.prepareStatement("Update tab_personne set personne_nom = ? ,personne_prenom = ? ,personne_type = ? where personne_id = ? ");
-            stmt.setObject(1, nom, Types.VARCHAR);
-            stmt.setObject(2, prenom, Types.VARCHAR);
-            stmt.setObject(3, type, Types.VARCHAR);
-            stmt.setObject(4, id, Types.INTEGER);
+            stmt.setObject(1, obj.getNom(), Types.VARCHAR);
+            stmt.setObject(2, obj.getPrenom(), Types.VARCHAR);
+            stmt.setObject(3, obj.getType(), Types.VARCHAR);
+            stmt.setObject(4, obj.getId(), Types.INTEGER);
             stmt.executeUpdate();
 
         } catch (SQLException ex) {
@@ -109,15 +124,13 @@ public class DAO_Eleve extends DAO<Eleve> {
         }
     }
 
-
-
     @Override
     public final void chargement() {
-        
+
         try {
-            
+
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from tab_personne");
+            ResultSet rs = stmt.executeQuery("select * from tab_personne where personne_type like 'etu'");
             collection_eleve = new ArrayList<>();
             while (rs.next()) {
 
@@ -127,12 +140,29 @@ public class DAO_Eleve extends DAO<Eleve> {
                 String d = rs.getString("personne_type");
                 System.out.println("a: " + a + " b: " + b + " c: " + c + " d: " + d);
 
-                collection_eleve.add(new Eleve(a, b, c, d));
+                collection_eleve.add(new Eleve(a, b, c));
 
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAO_Eleve.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void close_connection() throws SQLException {
+        this.conn.close();
+    }
+
+    public ArrayList<Eleve> getCollection_eleve() {
+        return collection_eleve;
+    }
+
+    public Eleve rechercher_eleve(Eleve e) throws NonExistingElement {
+        for (Eleve e1 : collection_eleve) {
+            if (e1.getNom().equals(e.getNom()) && e1.getPrenom().equals(e.getPrenom())) {
+                return e;
+            }
+        }
+        throw new NonExistingElement("");
     }
 
 }

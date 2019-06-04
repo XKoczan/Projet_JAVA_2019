@@ -26,6 +26,7 @@ public abstract class DAO<T> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url + dbName, userName, password);
+            System.out.println("Bien connecte");
         this.conn = conn;
         }catch(Exception e){
         System.out.println("probleme de connexion a la BDD");
@@ -37,15 +38,17 @@ public abstract class DAO<T> {
      * Méthode de création
      *
      * @param obj
+     * @param a
      * @return boolean
      */
-    public abstract void creer(T obj);
-
+    public abstract void creer(T obj, int a);
+    
     /**
      * Méthode pour effacer
      *
      * @param obj
      * @return boolean
+     * @throws Exceptions.NonSelectedElement
      */
     public abstract void supprimer(T obj);
 
