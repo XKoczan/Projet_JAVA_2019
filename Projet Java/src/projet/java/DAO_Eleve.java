@@ -12,8 +12,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 /**
  *
@@ -60,7 +63,7 @@ public class DAO_Eleve extends DAO<Eleve> {
             rs.next();
             int id2 = rs.getInt("inscription_id");
             System.out.println("IDD2:" + id2 + "| Classe:" + classe);
-            
+
             for (int i = 1; i <= 3; i++) {
                 stmt = conn.prepareStatement("insert into tab_bulletin(bulletin_trimestre_id,bulletin_inscription_id,bulletin_appreciation) values(?,?,'A renseigner')");
                 stmt.setObject(1, i, Types.INTEGER);
@@ -69,6 +72,8 @@ public class DAO_Eleve extends DAO<Eleve> {
                 System.out.println("2");
                 stmt.executeUpdate();
             }
+
+            insert_tab_detailbulletin(id2, classe);
 
         } catch (SQLException ex) {
             System.out.println("Probleme de creation eleve");
@@ -88,6 +93,29 @@ public class DAO_Eleve extends DAO<Eleve> {
             rs.next();
             int id2 = rs.getInt("inscription_id");
 
+            stmt = conn.prepareStatement("select bulletin_id FROM tab_bulletin where bulletin_inscription_id = ?");
+            stmt.setObject(1, id2);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                System.out.println("SUPP1");
+                int id3 = rs.getInt("bulletin_id");
+                stmt = conn.prepareStatement("select detailbulletin_bulletin_id FROM tab_detailbulletin where detailbulletin_bulletin_id = ?");
+                stmt.setObject(1, id3);
+                ResultSet rs2 = stmt.executeQuery();
+                System.out.println("SUPP2");
+                while (rs2.next()) {
+                    int id4 = rs2.getInt("detailbulletin_bulletin_id");
+                    stmt = conn.prepareStatement("DELETE FROM tab_evaluation where evaluation_detailbulletin_id = ?");
+                    stmt.setObject(1, id4);
+                    stmt.executeUpdate();
+                    System.out.println("SUPP3");
+                }
+                stmt = conn.prepareStatement("DELETE FROM tab_detailbulletin where detailbulletin_bulletin_id = ?");
+                stmt.setObject(1, id3);
+                stmt.executeUpdate();
+
+            }
+            System.out.println("AIE");
             stmt = conn.prepareStatement("DELETE FROM tab_bulletin where bulletin_inscription_id = ?");
             stmt.setObject(1, id2, Types.INTEGER);
             stmt.executeUpdate();
@@ -165,4 +193,136 @@ public class DAO_Eleve extends DAO<Eleve> {
         throw new NonExistingElement("");
     }
 
+    public void creer_combobox(JComboBox t3) {
+        try {
+            //Combobox pour la classe
+            //https://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
+
+            JLabel lab = new JLabel("Classes");
+            PreparedStatement stmt = conn.prepareStatement("SELECT classe_id FROM tab_classe ");
+            ResultSet Rs = stmt.executeQuery();
+            while (Rs.next()) {
+
+                //Pour affecter une valeur de base de données à un Combobox
+                t3.addItem(Rs.getString("classe_id"));
+            } //Fin de la comboBox
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO_Eleve.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        t3.setSelectedIndex(0);
+    }
+
+    public Bulletin consulter_bulletin(Eleve e, int i) {
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT inscription_id FROM tab_inscription WHERE inscription_personne_id = ?");
+//           System.out.println("1");//Test
+            stmt.setObject(1, e.getId());
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id2 = rs.getInt("inscription_id");
+
+            stmt = conn.prepareStatement("SELECT bulletin_appreciation, bulletin_id FROM tab_bulletin WHERE bulletin_inscription_id = ? and bulletin_trimestre_id = ?");
+//           System.out.println("1");//Test
+            stmt.setObject(1, id2);
+            stmt.setObject(2, i);
+            rs = stmt.executeQuery();
+            rs.next();
+            String id3 = rs.getString("bulletin_appreciation");
+            int id = rs.getInt("bulletin_id");
+
+            System.out.println(id2 + ":" + id);
+            return new Bulletin(id3, id, e);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO_Eleve.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public DetailBulletin details_bulletin(Bulletin bulletin) throws SQLException {
+        ArrayList<Note> Array = new ArrayList<>();
+        HashMap<String,ArrayList<Note>> hm= new HashMap();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM tab_detailbulletin WHERE detailbulletin_bulletin_id = ?");
+//           System.out.println("1");//Test
+        stmt.setObject(1, bulletin.getId());
+        ResultSet rs = stmt.executeQuery();
+         while(rs.next()){
+             
+        int id2 = rs.getInt("detailbulletin_id");
+        int id3 = rs.getInt("detailbulletin_enseignement_id");
+        String comm = rs.getString("detailbulletin_appreciation");
+        System.out.println("TEST1");
+        stmt = conn.prepareStatement("SELECT discipline_nom FROM tab_discipline c ,tab_enseignement d WHERE d.enseignement_id = ? and d.enseignement_discipline_id = c.discipline_id ");
+//           System.out.println("1");//Test
+        stmt.setObject(1, id3);
+        rs = stmt.executeQuery();
+        System.out.println("TEST2");
+       rs.next();
+            String result = rs.getString("discipline_nom");
+
+            stmt = conn.prepareStatement("SELECT evaluation_note FROM tab_evaluation WHERE evaluation_detailbulletin_id = ?");
+    //           System.out.println("1");//Test
+            stmt.setObject(1, id2);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int i=rs.getInt("evaluation_note");
+                Array.add(new Note(i,"à renseigner"));
+            }
+            hm.put(result, Array);
+        }
+        
+        return new DetailBulletin(hm);
+
+    }
+
+    private void insert_tab_detailbulletin(int id2, int classe) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT bulletin_id FROM tab_bulletin WHERE bulletin_inscription_id = ?");
+//           System.out.println("1");//Test
+        stmt.setObject(1, id2);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+
+            int id4 = rs.getInt("bulletin_id");
+            System.out.println("IDD4:" + id4);
+
+            stmt = conn.prepareStatement("SELECT enseignement_id FROM tab_enseignement WHERE enseignement_classe_id = ?");
+
+            stmt.setObject(1, classe);
+            ResultSet rs3 = stmt.executeQuery();
+            System.out.println("SELECTED");//Test
+            while (rs3.next()) {
+                int id3 = rs3.getInt("enseignement_id");
+
+                stmt = conn.prepareStatement("insert into tab_detailbulletin(detailbulletin_bulletin_id,detailbulletin_enseignement_id,detailbulletin_appreciation) values(?,?,'A renseigner')");
+                stmt.setObject(1, id4, Types.INTEGER);
+                System.out.println("1");
+                stmt.setObject(2, id3, Types.INTEGER);
+                System.out.println("2");
+                stmt.executeUpdate();
+                System.out.println("SELECTED2");
+
+                insert_tab_evaluation(id4);
+
+            }
+
+        }
+    }
+
+    private void insert_tab_evaluation(int id4) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT detailbulletin_id FROM tab_detailbulletin WHERE detailbulletin_bulletin_id = ?");
+        System.out.println("SELECTED3");
+        stmt.setObject(1, id4);
+        ResultSet rs4 = stmt.executeQuery();
+        System.out.println("SELECTED5");
+        while (rs4.next()) {
+            int id5 = rs4.getInt("detailbulletin_id");
+            System.out.println(id5);
+            stmt = conn.prepareStatement("insert into tab_evaluation(evaluation_detailbulletin_id,evaluation_note,evaluation_appreciation) values(?,?,'A renseigner')");
+            stmt.setObject(1, id5, Types.INTEGER);
+            stmt.setObject(2, null, Types.INTEGER);
+            stmt.executeUpdate();
+            System.out.println("SELECTED4");
+
+        }
+    }
 }

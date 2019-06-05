@@ -12,12 +12,21 @@ import javax.swing.*;
  * @author xavie
  */
 public class Error {
+    private JFrame frame= new JFrame();
     public Error(String message){
-        JFrame frame = new JFrame();
+        frame = new JFrame("Error");
         JLabel lab = new JLabel(message);
         frame.setSize(300, 100);
         frame.setLocationRelativeTo(null);
         frame.add(lab);
         frame.setVisible(true);
     }
+
+    Error() {
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+    
 }

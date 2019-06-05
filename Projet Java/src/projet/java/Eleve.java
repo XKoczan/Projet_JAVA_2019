@@ -10,6 +10,8 @@ package projet.java;
  * @author Guillaume
  */
 public class Eleve extends Personne{
+    
+    
     public Eleve() {
 
     }

@@ -10,10 +10,17 @@ package projet.java;
  * @author Guillaume
  */
 public class Discipline {
+
     int id;
     String nom;
-    
-    Discipline(){}
+
+    Discipline() {
+    }
+
+    public Discipline(String nom) {
+
+        this.nom = nom;
+    }
 
     public Discipline(int id, String nom) {
         this.id = id;
@@ -27,10 +34,8 @@ public class Discipline {
     public String getNom() {
         return nom;
     }
-    
-   
-    public String toString()
-    {
-        return "ID:"+this.getId()+"|"+"NOM:"+this.getNom();
+
+    public String toString() {
+        return "ID:" + this.getId() + "|" + "NOM:" + this.getNom();
     }
 }

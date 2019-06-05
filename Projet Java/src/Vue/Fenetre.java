@@ -15,14 +15,21 @@ import javax.swing.JPanel;
  */
 public class Fenetre {
 
-    private final JFrame frame = new JFrame();
+    private JFrame frame = new JFrame();
     private final JPanel panel = new JPanel();
+    private final String name="";
 
-    public Fenetre() {
+    public Fenetre(String name) {
+        frame=new JFrame(name);
         frame.setSize(200, 200);
         frame.setLocationRelativeTo(null);
-        frame.setLayout(new GridLayout(2, 1));
+        frame.setLayout(new GridLayout(2,1));
         frame.setVisible(true);
+        
+    }
+
+    Fenetre() {
+       
     }
 
     public JFrame getFrame() {
