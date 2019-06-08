@@ -3,16 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/projet/java/Eleve.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/projet/java/ProjetJava.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/Exceptions/NonExistingElement.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/projet/java/Personne.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/Vue/Error.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/Vue/Fenetre.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/Vue/InterfaceGraphique.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/projet/java/Connexion.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/projet/java/DAO.java</file>
-            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Xavier/Projet%20Java/src/projet/java/DAO_Eleve.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/Note.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/Bulletin.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/Vue/InterfaceGraphique.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/Professeur.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/Vue/Connect.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/Exceptions/DisciplineException.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/Classe.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/Exceptions/ClasseException.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/Vue/Error.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/DAO_Professeur.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/DetailBulletin.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/ProjetJava.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/DAO.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/DAO_Classe.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/Vue/Fenetre.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/DAO_Eleve.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/DAO_Discipline.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/Exceptions/AnneeScolaireException.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/Eleve.java</file>
+            <file>file:/D:/Users/xavie/Documents/NetBeansProjects/Projet_JAVA_2019-Guillaume/Projet_JAVA_2019-VJeudi2/Projet%20Java/src/projet/java/Discipline.java</file>
         </group>
     </open-files>
 </project-private>

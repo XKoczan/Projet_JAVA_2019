@@ -17,22 +17,7 @@ public abstract class DAO<T> {
     protected Connection conn = null;
 
     public DAO() {
-        conn = null;
-        String url = "jdbc:mysql://localhost/";
-        String dbName = "gestion_ecole";
-        String driver = "com.mysql.jdbc.Driver";
-        String userName = "root";
-        String password = "";
-        try {
-            Class.forName(driver);
-            conn = DriverManager.getConnection(url + dbName, userName, password);
-            System.out.println("Bien connecte");
-        this.conn = conn;
-        }catch(Exception e){
-        System.out.println("probleme de connexion a la BDD");
-        }
-        
-    }
+         }
 
     /**
      * Méthode de création
@@ -42,7 +27,7 @@ public abstract class DAO<T> {
      * @return boolean
      */
     public abstract void creer(T obj, int a);
-
+    
     /**
      * Méthode pour effacer
      *
